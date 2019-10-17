@@ -85,7 +85,7 @@
 - Multiple valued attribute (I.e multiple attributes of the same thing, e.g phone numbers)
   - 2 ovals drawn around it
 - Derived attributes
-  - Brokwn line ovals
+  - Broken line ovals
 
 ### Convention
 
