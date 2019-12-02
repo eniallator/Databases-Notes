@@ -186,3 +186,49 @@ INSERT INTO Car VALUES('red', 'alloy wheels, roof rack');
 - Character sets are e.g `latin1`, `hebrew`, `utf-8`
 - Default character set for us seems to be `latin1`
 - Collation refers to the various ways strings can be compared and ordered
+
+## Functions
+
+### Aggregate Functions
+
+- `COUNT([DISTINCT] <col>)`
+  - Counts the number of rows in the select
+  - `DISTINCT` counts the number of unique rows in the select
+- `SUM(<col>)`
+  - Sums the numbers in the given column where `null` values are ignored
+- Can't mix aggregated things and non-aggregated things
+  - E.g: `SELECT staffNo, COUNT(salary) FROM Staff`
+  - First column is the `staffNo` but you can't know what to put in the second column since it doesn't make sense
+
+#### Grouping Results
+
+- How can we do subtotals and only affect certain rows?
+  - Group by certain columns!
+
+```sql
+SELECT <col-name-1>, ..., <col-name-m>
+FROM ... [WHERE ...]
+[GROUP BY <col-name'-1>, ..., <col-name'-k>]
+```
+
+- E.g How many staff are there for each branch and what is their total salary?
+  - Group rows with the same branch IDs
+  - As many groupings as distinct branch numbers
+  - Count for each grouping
+  - Sum total salary
+
+```sql
+SELECT branchNo,
+       COUNT(staffNo) count,
+       SUM(salary) total
+FROM Staff
+GROUP BY branchNo;
+```
+
+- Grouping by `branchNo`
+  - The aggregation is unique per row, since it's selecting the branchNo
+  - So can mix aggregation and non-aggregation in this case
+
+## Having
+
+- In the `HAVING` clause one can use expressions from the `GROUP BY` clause that use an aggregate function
